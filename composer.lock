@@ -1,0 +1,306 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "37ff8ae946a4144df67a7a2aca4bf786",
+    "packages": [
+        {
+            "name": "atoms/http",
+            "version": "0.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/gotamedia/http.git",
+                "reference": "0c64f856040d604655bd5a8805bcaa22e28402fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/gotamedia/http/get/0c64f856040d604655bd5a8805bcaa22e28402fe.zip",
+                "reference": "0c64f856040d604655bd5a8805bcaa22e28402fe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "psr/http-message": "~1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "6.2.1",
+                "squizlabs/php_codesniffer": "3.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Atoms\\Http\\": "src"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ],
+                "lint": [
+                    "phpcs --standard=PSR2 src"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Pettersson",
+                    "email": "peter.pettersson@gotamedia.se"
+                },
+                {
+                    "name": "Martin Pettersson",
+                    "email": "martin.pettersson@gotamedia.se"
+                }
+            ],
+            "description": "Implementations of PSR-7 and PSR-17.",
+            "homepage": "https://bitbucket.org/gotamedia/http",
+            "support": {
+                "source": "https://bitbucket.org/gotamedia/http/src/0c64f856040d604655bd5a8805bcaa22e28402fe/?at=master"
+            },
+            "time": "2018-09-07T08:58:24+00:00"
+        },
+        {
+            "name": "atoms/httpfactory",
+            "version": "0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/gotamedia/httpfactory.git",
+                "reference": "6403b4798abde222e573df7c2ee4a862c561598c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/gotamedia/httpfactory/get/6403b4798abde222e573df7c2ee4a862c561598c.zip",
+                "reference": "6403b4798abde222e573df7c2ee4a862c561598c",
+                "shasum": ""
+            },
+            "require": {
+                "atoms/http": "~0.0.1",
+                "php": ">=7.1.0",
+                "psr/http-factory": "~1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Atoms\\HttpFactory\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Pettersson",
+                    "email": "peter.pettersson@gotamedia.se"
+                }
+            ],
+            "description": "An implementation of PSR-17.",
+            "homepage": "https://bitbucket.org/gotamedia/httpfactory",
+            "support": {
+                "source": "https://bitbucket.org/gotamedia/httpfactory/src/6403b4798abde222e573df7c2ee4a862c561598c/?at=0.0.2"
+            },
+            "time": "2018-09-07T12:42:40+00:00"
+        },
+        {
+            "name": "atoms/log",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/gotamedia/log.git",
+                "reference": "5db5ed9e74174e44fa75227495d2c31e97119266"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/gotamedia/log/get/5db5ed9e74174e44fa75227495d2c31e97119266.zip",
+                "reference": "5db5ed9e74174e44fa75227495d2c31e97119266",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "psr/log": "~1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Atoms\\Log\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Pettersson",
+                    "email": "peter.pettersson@gotamedia.se"
+                }
+            ],
+            "description": "An implementation of PSR-3.",
+            "homepage": "https://bitbucket.org/gotamedia/log",
+            "support": {
+                "source": "https://bitbucket.org/gotamedia/log/src/5db5ed9e74174e44fa75227495d2c31e97119266/?at=0.0.3"
+            },
+            "time": "2018-05-17T08:36:03+00:00"
+        },
+        {
+            "name": "psr/http-factory",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-factory.git",
+                "reference": "378bfe27931ecc54ff824a20d6f6bfc303bbd04c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-factory/zipball/378bfe27931ecc54ff824a20d6f6bfc303bbd04c",
+                "reference": "378bfe27931ecc54ff824a20d6f6bfc303bbd04c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for PSR-7 HTTP message factories",
+            "keywords": [
+                "factory",
+                "http",
+                "message",
+                "psr",
+                "psr-17",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2018-07-30T21:54:04+00:00"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2016-08-06T14:39:51+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2016-10-10T12:19:37+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.1.0"
+    },
+    "platform-dev": []
+}

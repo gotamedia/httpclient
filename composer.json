@@ -1,0 +1,37 @@
+{
+    "name": "atoms/httpclient",
+    "description": "An implementation of PSR-18.",
+    "homepage": "https://bitbucket.org/gotamedia/httpclient",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Peter Pettersson",
+            "email": "peter.pettersson@gotamedia.se"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Atoms\\HttpClient\\": "src/",
+            "Psr\\Http\\Client\\": "src/Psr/Http/Client/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.gotamedia.se"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "atoms/httpfactory": "~0.0.1",
+        "atoms/log": "~0.0.1"
+    },
+    "config": {
+        "secure-http": false
+    },
+    "scripts": {
+        "test": "phpunit",
+        "lint": "phpcs --standard=PSR2 src"
+    }
+}
