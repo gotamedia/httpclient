@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "atoms/http",
-            "version": "0.0.6",
+            "version": "0.0.8",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/gotamedia/http.git",
-                "reference": "0c64f856040d604655bd5a8805bcaa22e28402fe"
+                "reference": "1ddf48c64c102a6239af94afc48482e8b7833449"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/gotamedia/http/get/0c64f856040d604655bd5a8805bcaa22e28402fe.zip",
-                "reference": "0c64f856040d604655bd5a8805bcaa22e28402fe",
+                "url": "https://bitbucket.org/gotamedia/http/get/1ddf48c64c102a6239af94afc48482e8b7833449.zip",
+                "reference": "1ddf48c64c102a6239af94afc48482e8b7833449",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Atoms\\Http\\": "src"
+                    "Atoms\\Http\\": "src/"
                 }
             },
             "scripts": {
@@ -55,25 +55,25 @@
                     "email": "martin.pettersson@gotamedia.se"
                 }
             ],
-            "description": "Implementations of PSR-7 and PSR-17.",
+            "description": "Implementations of PSR-7.",
             "homepage": "https://bitbucket.org/gotamedia/http",
             "support": {
-                "source": "https://bitbucket.org/gotamedia/http/src/0c64f856040d604655bd5a8805bcaa22e28402fe/?at=master"
+                "source": "https://bitbucket.org/gotamedia/http/src/1ddf48c64c102a6239af94afc48482e8b7833449/?at=0.0.8"
             },
-            "time": "2018-09-07T08:58:24+00:00"
+            "time": "2018-09-11T13:47:50+00:00"
         },
         {
             "name": "atoms/httpfactory",
-            "version": "0.0.2",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/gotamedia/httpfactory.git",
-                "reference": "6403b4798abde222e573df7c2ee4a862c561598c"
+                "reference": "c168a74c1becd7523ca696a656f8eb46a3a0e295"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/gotamedia/httpfactory/get/6403b4798abde222e573df7c2ee4a862c561598c.zip",
-                "reference": "6403b4798abde222e573df7c2ee4a862c561598c",
+                "url": "https://bitbucket.org/gotamedia/httpfactory/get/c168a74c1becd7523ca696a656f8eb46a3a0e295.zip",
+                "reference": "c168a74c1becd7523ca696a656f8eb46a3a0e295",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Atoms\\HttpFactory\\": "src"
+                    "Atoms\\Http\\": "src/"
                 }
             },
             "license": [
@@ -99,9 +99,9 @@
             "description": "An implementation of PSR-17.",
             "homepage": "https://bitbucket.org/gotamedia/httpfactory",
             "support": {
-                "source": "https://bitbucket.org/gotamedia/httpfactory/src/6403b4798abde222e573df7c2ee4a862c561598c/?at=0.0.2"
+                "source": "https://bitbucket.org/gotamedia/httpfactory/src/c168a74c1becd7523ca696a656f8eb46a3a0e295/?at=0.0.3"
             },
-            "time": "2018-09-07T12:42:40+00:00"
+            "time": "2018-09-11T14:25:18+00:00"
         },
         {
             "name": "atoms/log",
