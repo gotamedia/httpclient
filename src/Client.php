@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Atoms\HttpClient;
 
-use Atoms\HttpFactory\ResponseFactory;
-use Atoms\HttpFactory\StreamFactory;
+use Atoms\Http\ResponseFactory;
+use Atoms\Http\StreamFactory;
+use Atoms\Http\UriFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Client\RequestException;
 use Psr\Http\Message\RequestInterface;
@@ -81,13 +82,12 @@ class Client implements ClientInterface
 
         list($statusLine, $headers) = $this->parseHeaders(rtrim($rawHeaders));
 
-        $response = (new ResponseFactory())->createResponse($statusCode, '')->withBody(
-            (new StreamFactory())->createStream($body)
-        );
+        $streamFactory = new StreamFactory();
+        $responseFactory = new ResponseFactory($streamFactory, new UriFactory());
 
-        foreach ($headers as $name => $value) {
-            $response = $response->withHeader($name, $value);
-        }
+        $response = $responseFactory->createResponseWithHeaders($statusCode, '', $headers)->withBody(
+            $streamFactory->createStream($body)
+        );
 
         return $response;
     }
