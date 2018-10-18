@@ -2,9 +2,11 @@
 
 namespace Psr\Http\Client;
 
+use Exception;
+
 /**
  * Every HTTP client related exception MUST implement this interface.
  */
-class ClientException implements ClientExceptionInterface
+class ClientException extends Exception implements ClientExceptionInterface
 {
 }
