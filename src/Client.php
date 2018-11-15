@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Atoms\HttpClient;
 
-use Atoms\Http\ResponseFactory;
-use Atoms\Http\StreamFactory;
-use Atoms\Http\UriFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Client\RequestException;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class Client implements ClientInterface
 {
@@ -26,15 +25,33 @@ class Client implements ClientInterface
     ];
 
     /**
+     * @var \Psr\Http\Message\ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    /**
+     * @var \Psr\Http\Message\StreamFactoryInterface
+     */
+    private $streamFactory;
+
+    /**
      * @var resource
      */
     private $curl;
 
     /**
      * Creates a new Client instance.
+     *
+     * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory
+     * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
+     * @param array $curlOptions
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function __construct()
-    {
+    public function __construct(
+        ResponseFactoryInterface $responseFactory,
+        StreamFactoryInterface $streamFactory,
+        array $curlOptions = []
+    ) {
         /** Check that cURL is available */
         if (!function_exists('curl_init')) {
             throw new CurlNotFoundException(
@@ -42,9 +59,11 @@ class Client implements ClientInterface
             );
         }
 
+        $this->responseFactory = $responseFactory;
+        $this->streamFactory = $streamFactory;
         $this->curl = curl_init();
 
-        curl_setopt_array($this->curl, self::CURL_OPTIONS);
+        curl_setopt_array($this->curl, array_replace(self::CURL_OPTIONS, $curlOptions));
     }
 
     /**
@@ -56,6 +75,7 @@ class Client implements ClientInterface
             throw new RequestException('Invalid request', $request);
         }
 
+        // @todo Check what kind of error occurred and throw appropriate exception.
         if (($data = curl_exec($this->curl)) === false) {
             throw new RequestException(
                 'Request error (' .  curl_errno($this->curl) . '): ' . curl_error($this->curl),
@@ -69,7 +89,7 @@ class Client implements ClientInterface
     /**
      * Creates a response from the request data.
      *
-     * @param  string $data
+     * @param string $data
      * @return \Psr\Http\Message\ResponseInterface
      */
     private function createResponse($data): ResponseInterface
@@ -79,23 +99,22 @@ class Client implements ClientInterface
         $headerSize = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
         $rawHeaders = substr($data, 0, $headerSize);
         $body = substr($data, $headerSize);
-
         list($statusLine, $headers) = $this->parseHeaders(rtrim($rawHeaders));
+        $reasonPhrase = implode(' ', array_slice(explode(' ', $statusLine), 2));
+        $response = $this->responseFactory->createResponse($statusCode, $reasonPhrase);
 
-        $streamFactory = new StreamFactory();
-        $responseFactory = new ResponseFactory($streamFactory, new UriFactory());
+        foreach ($headers as $key => $value) {
+            // @todo The exploding of the value will cause certain dates to be split up, what to do?
+            $response = $response->withHeader($key, explode(',', $value));
+        }
 
-        $response = $responseFactory->createResponseWithHeaders($statusCode, '', $headers)->withBody(
-            $streamFactory->createStream($body)
-        );
-
-        return $response;
+        return $response->withBody($this->streamFactory->createStream($body));
     }
 
     /**
      * Parses the raw response headers.
      *
-     * @param  string $rawHeaders
+     * @param string $rawHeaders
      * @return array
      */
     private function parseHeaders(string $rawHeaders): array
@@ -105,7 +124,7 @@ class Client implements ClientInterface
 
         $headers = [];
         foreach ($rawHeaders as $rawHeader) {
-            list($name, $value) = preg_split('|: |', $rawHeader);
+            list($name, $value) = preg_split('|:|', $rawHeader);
 
             $headers[$name] = $value;
         }
@@ -116,7 +135,7 @@ class Client implements ClientInterface
     /**
      * Sets cURL options from the request.
      *
-     * @param  \Psr\Http\Message\RequestInterface $request
+     * @param \Psr\Http\Message\RequestInterface $request
      * @return bool
      */
     private function setOptionsFromRequest(RequestInterface $request): bool

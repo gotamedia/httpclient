@@ -2,11 +2,10 @@
 
 namespace Psr\Http\Client;
 
-use Exception;
 use Psr\Http\Message\RequestInterface;
 use Throwable;
 
-class NetworkException extends Exception implements NetworkExceptionInterface
+class NetworkException extends ClientException implements NetworkExceptionInterface
 {
     /**
      * @var \Psr\Http\Message\RequestInterface
