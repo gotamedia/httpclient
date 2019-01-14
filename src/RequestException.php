@@ -1,11 +1,15 @@
 <?php
 
-namespace Psr\Http\Client;
+declare(strict_types=1);
 
+namespace Atoms\HttpClient;
+
+use Exception;
+use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Throwable;
 
-class RequestException extends ClientException implements RequestExceptionInterface
+class RequestException extends Exception implements RequestExceptionInterface
 {
     /**
      * @var \Psr\Http\Message\RequestInterface

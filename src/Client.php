@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Atoms\HttpClient;
 
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Client\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -45,7 +44,7 @@ class Client implements ClientInterface
      * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory
      * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
      * @param array $curlOptions
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws \Atoms\HttpClient\CurlNotFoundException
      */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
