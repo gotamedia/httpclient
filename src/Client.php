@@ -68,10 +68,14 @@ class Client implements ClientInterface
     /**
      * {@inheritDoc}
      */
-    public function sendRequest(RequestInterface $request): ResponseInterface
+    public function sendRequest(RequestInterface $request, array $options = []): ResponseInterface
     {
         if ($this->setOptionsFromRequest($request) === false) {
             throw new RequestException('Invalid request', $request);
+        }
+
+        if (count($options) > 0) {
+            $this->setOptions($options);
         }
 
         // @todo Check what kind of error occurred and throw appropriate exception.
@@ -129,6 +133,17 @@ class Client implements ClientInterface
         }
 
         return [$statusLine, $headers];
+    }
+
+    /**
+     * Sets an array of cURL options.
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function setOptions(array $options): bool
+    {
+        return curl_setopt_array($this->curl, $options);
     }
 
     /**
