@@ -67,6 +67,11 @@ class Client implements ClientInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Atoms\HttpClient\ClientException
+     * @throws \Atoms\HttpClient\RequestException
      */
     public function sendRequest(RequestInterface $request, array $options = []): ResponseInterface
     {
@@ -75,7 +80,9 @@ class Client implements ClientInterface
         }
 
         if (count($options) > 0) {
-            $this->setOptions($options);
+            if ($this->setOptions($options) === false) {
+                throw new ClientException('Invalid options');
+            }
         }
 
         // @todo Check what kind of error occurred and throw appropriate exception.
