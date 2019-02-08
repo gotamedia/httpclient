@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Atoms\HttpClient;
 
-use Exception;
 use Psr\Http\Client\NetworkExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Throwable;
 
-class NetworkException extends Exception implements NetworkExceptionInterface
+class NetworkException extends ClientException implements NetworkExceptionInterface
 {
     /**
      * @var \Psr\Http\Message\RequestInterface
