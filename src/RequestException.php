@@ -1,7 +1,10 @@
 <?php
 
-namespace Psr\Http\Client;
+declare(strict_types=1);
 
+namespace Atoms\HttpClient;
+
+use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Throwable;
 

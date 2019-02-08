@@ -1,8 +1,8 @@
 <?php
 
-namespace Atoms\HttpClient;
+declare(strict_types=1);
 
-use Psr\Http\Client\ClientException;
+namespace Atoms\HttpClient;
 
 class CurlNotFoundException extends ClientException
 {

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Atoms\HttpClient;
 
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Client\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -45,7 +44,7 @@ class Client implements ClientInterface
      * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory
      * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
      * @param array $curlOptions
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws \Atoms\HttpClient\CurlNotFoundException
      */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
@@ -68,11 +67,22 @@ class Client implements ClientInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Atoms\HttpClient\ClientException
+     * @throws \Atoms\HttpClient\RequestException
      */
-    public function sendRequest(RequestInterface $request): ResponseInterface
+    public function sendRequest(RequestInterface $request, array $options = []): ResponseInterface
     {
         if ($this->setOptionsFromRequest($request) === false) {
             throw new RequestException('Invalid request', $request);
+        }
+
+        if (count($options) > 0) {
+            if ($this->setOptions($options) === false) {
+                throw new ClientException('Invalid options');
+            }
         }
 
         // @todo Check what kind of error occurred and throw appropriate exception.
@@ -130,6 +140,17 @@ class Client implements ClientInterface
         }
 
         return [$statusLine, $headers];
+    }
+
+    /**
+     * Sets an array of cURL options.
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function setOptions(array $options): bool
+    {
+        return curl_setopt_array($this->curl, $options);
     }
 
     /**

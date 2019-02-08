@@ -13,12 +13,11 @@
     "scripts": {
         "test": "phpunit",
         "lint": "phpcs --standard=PSR2 src",
-        "analyze": "phpmd src text phpmd.xml; phan --output-mode text --color"
+        "analyze": "phpmd src text phpmd.xml; phan --output-mode text --color --allow-polyfill-parser"
     },
     "autoload": {
         "psr-4": {
-            "Atoms\\HttpClient\\": "src/",
-            "Psr\\Http\\Client\\": "src/Psr/Http/Client/"
+            "Atoms\\HttpClient\\": "src/"
         }
     },
     "repositories": [
@@ -29,6 +28,7 @@
     ],
     "require": {
         "php": ">=7.1.0",
+        "psr/http-client": "~1.0.0",
         "psr/http-message": "~1.0.0",
         "psr/http-factory": "~1.0.0"
     },

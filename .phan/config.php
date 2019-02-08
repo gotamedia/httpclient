@@ -290,6 +290,7 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
+        'vendor/psr/http-client/src',
         'vendor/psr/http-message/src',
         'vendor/psr/http-factory/src'
     ],
