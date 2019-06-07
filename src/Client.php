@@ -85,6 +85,45 @@ class Client implements ClientInterface
             }
         }
 
+        $headers = [];
+        $protocol = '';
+        $reasonPhrase = '';
+
+        curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, function (
+            $curl,
+            $headerLine
+        ) use (
+            &$headers,
+            &$protocol,
+            &$reasonPhrase
+        ) {
+            $len = strlen($headerLine);
+            $header = explode(':', $headerLine, 2);
+
+            if (count($header) < 2) {
+                $header = explode(' ', $headerLine, 3);
+
+                if (count($header) === 3) {
+                    $protocol = str_replace('HTTP/', '', $header[0]);
+                    $reasonPhrase = $header[2];
+                }
+
+                return $len;
+            }
+
+            $name = trim($header[0]);
+
+            if (array_key_exists($name, $headers)) {
+                $headers[$name][] = trim($header[1]);
+
+                return $len;
+            }
+
+            $headers[$name] = [trim($header[1])];
+
+            return $len;
+        });
+
         // @todo Check what kind of error occurred and throw appropriate exception.
         if (($data = curl_exec($this->curl)) === false) {
             throw new RequestException(
@@ -93,53 +132,23 @@ class Client implements ClientInterface
             );
         }
 
-        return $this->createResponse($data);
-    }
-
-    /**
-     * Creates a response from the request data.
-     *
-     * @param string $data
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    private function createResponse($data): ResponseInterface
-    {
-        /** Get the header and body from the response data */
+        /** Get the body from the response data */
         $statusCode = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
         $headerSize = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
-        $rawHeaders = substr($data, 0, $headerSize);
         $body = substr($data, $headerSize);
-        list($statusLine, $headers) = $this->parseHeaders(rtrim($rawHeaders));
-        $reasonPhrase = implode(' ', array_slice(explode(' ', $statusLine), 2));
-        $response = $this->responseFactory->createResponse($statusCode, $reasonPhrase);
 
-        foreach ($headers as $key => $value) {
-            // @todo The exploding of the value will cause certain dates to be split up, what to do?
-            $response = $response->withHeader($key, explode(',', $value));
+        $response = $this->responseFactory->createResponse(
+            $statusCode,
+            $reasonPhrase
+        );
+
+        foreach ($headers as $name => $value) {
+            $response = $response->withHeader($name, $value);
         }
 
-        return $response->withBody($this->streamFactory->createStream($body));
-    }
-
-    /**
-     * Parses the raw response headers.
-     *
-     * @param string $rawHeaders
-     * @return array
-     */
-    private function parseHeaders(string $rawHeaders): array
-    {
-        $rawHeaders = preg_split('|(\\r?\\n)|', $rawHeaders);
-        $statusLine = array_shift($rawHeaders);
-
-        $headers = [];
-        foreach ($rawHeaders as $rawHeader) {
-            list($name, $value) = preg_split('|:|', $rawHeader);
-
-            $headers[$name] = $value;
-        }
-
-        return [$statusLine, $headers];
+        return $response
+            ->withBody($this->streamFactory->createStream($body))
+            ->withProtocolVersion($protocol);
     }
 
     /**
